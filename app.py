@@ -14,14 +14,16 @@ tab1, tab2 = st.tabs(["📊 各種記録・閲覧", "✍️ 成績インプッ�
 with tab1:
   st.subheader("🏆 プレイヤー各種記録・ランキング")
   try:
-    df_rec = pd.read_csv("GC麻雀記録ファイル_各種記録.csv")
+    # GitHub上のファイル名（スペースあり）に合わせる
+    df_rec = pd.read_csv("GC麻雀記録ファイル - 各種記録.csv")
     st.dataframe(df_rec, use_container_width=True)
   except FileNotFoundError:
     st.warning("各種記録のデータが見つかりません。")
 
   st.subheader("📈 成績インプット履歴（直近データ）")
   try:
-    df_input = pd.read_csv("GC麻雀記録ファイル_成績インプット.csv")
+    # GitHub上のファイル名（スペースあり）に合わせる
+    df_input = pd.read_csv("GC麻雀記録ファイル - 成績インプット.csv")
     st.dataframe(df_input, use_container_width=True)
   except FileNotFoundError:
     st.warning("成績インプットのデータが見つかりません。")
