@@ -1,4 +1,5 @@
 import pandas as pd
+from st_aggrid import AgGrid, GridOptionsBuilder
 import streamlit as st
 
 st.set_page_config(
@@ -10,21 +11,38 @@ st.title("🀄 GC麻雀 成績管理ダッシュボード")
 # タブの作成
 tab1, tab2 = st.tabs(["📊 各種記録・閲覧", "✍️ 成績インプット"])
 
+
+# スプレッドシート風（格子線・列幅調整あり）にテーブルを表示する関数
+def show_spreadsheet_table(df):
+  gb = GridOptionsBuilder.from_dataframe(df)
+  gb.configure_pagination(paginationAutoPageSize=True)  # ページネーション
+  gb.configure_side_bar()  # サイドバー（フィルター等）の有効化
+  gb.configure_default_column(
+      editable=False, searchable=True, sortable=True, resizable=True
+  )
+  gridOptions = gb.build()
+
+  AgGrid(
+      df,
+      gridOptions=gridOptions,
+      use_container_width=True,
+      fit_columns_on_grid_load=True,
+  )
+
+
 # --- タブ1: 閲覧画面 ---
 with tab1:
   st.subheader("🏆 プレイヤー各種記録・ランキング")
   try:
-    # GitHub上のファイル名（スペースあり）に合わせる
     df_rec = pd.read_csv("GC麻雀記録ファイル - 各種記録.csv")
-    st.dataframe(df_rec, use_container_width=True)
+    show_spreadsheet_table(df_rec)
   except FileNotFoundError:
     st.warning("各種記録のデータが見つかりません。")
 
   st.subheader("📈 成績インプット履歴（直近データ）")
   try:
-    # GitHub上のファイル名（スペースあり）に合わせる
     df_input = pd.read_csv("GC麻雀記録ファイル - 成績インプット.csv")
-    st.dataframe(df_input, use_container_width=True)
+    show_spreadsheet_table(df_input)
   except FileNotFoundError:
     st.warning("成績インプットのデータが見つかりません。")
 
