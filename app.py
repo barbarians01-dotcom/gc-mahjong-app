@@ -41,20 +41,26 @@ with tab2:
     with col2:
       game_type = st.selectbox("ゲーム形式", ["東風戦", "半荘戦", "三麻"])
     with col3:
-      rate = st.number_input("レート", value=30.0)
+      rate = st.number_input("レート", value=30, step=1, format="%d")
 
-    st.markdown("### 各プレイヤーのスコア入力")
+    st.markdown("### 各プレイヤーのスコア入力（整数）")
     col_p1, col_p2, col_p3, col_p4, col_p5 = st.columns(5)
     with col_p1:
-      score_hirano = st.number_input("平野", value=0.0)
+      score_hirano = st.number_input(
+          "平野", value=0, step=1, format="%d"
+      )
     with col_p2:
-      score_take = st.number_input("武範", value=0.0)
+      score_take = st.number_input(
+          "武範", value=0, step=1, format="%d"
+      )
     with col_p3:
-      score_kyo = st.number_input("恭平", value=0.0)
+      score_kyo = st.number_input(
+          "恭平", value=0, step=1, format="%d"
+      )
     with col_p4:
-      score_ami = st.number_input("亜美", value=0.0)
+      score_ami = st.number_input("亜美", value=0, step=1, format="%d")
     with col_p5:
-      score_yuta = st.number_input("雄太", value=0.0)
+      score_yuta = st.number_input("雄太", value=0, step=1, format="%d")
 
     submitted = st.form_submit_button("成績を追加する")
     if submitted:
